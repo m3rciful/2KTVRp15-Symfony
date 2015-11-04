@@ -1,0 +1,9 @@
+{
+    "autoload" : {
+        "files":[
+            "controller/controllers.php",
+            "model/model.php",
+            "route/routing.php"
+        ]
+    }
+}
