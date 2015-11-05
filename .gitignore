@@ -1,4 +1,6 @@
 #PUPIL IGNORE
+.phpintel/
+.phpintel
 vendor/
 vendor
 

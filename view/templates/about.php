@@ -2,7 +2,7 @@
 
 <?php ob_start() ?>
 
-<h2><a href="../" class="fa fa-chevron-left"></a> Обо мне</h2>
+<h2><a href="./" class="fa fa-chevron-left"></a> Обо мне</h2>
 <hr>
 	<ul>
 		<li>Sergei Novitskov</li>

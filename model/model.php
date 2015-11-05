@@ -41,14 +41,8 @@ function get_post($id)
 function add_post()
 {
 	// ---------------- требудет доработки ----------------
-	$author = $_REQUEST ['add_author'];
-	$date = $_REQUEST['add_time'];
-	$time = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)));
-	$title = $_REQUEST['add_title'];
-	$content = $_REQUEST['add_content'];
-
-	if (empty($content))
-		$content = random_lipsum(1, 'paras', 0);
+	$time = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $_REQUEST['add_time'])));
+	//$content = random_lipsum(1, 'paras', 0);
 	// ---------------- требудет доработки ----------------
 
 	$pdo = open_database_connection();
@@ -56,10 +50,10 @@ function add_post()
 	$stmt = $pdo->prepare("INSERT INTO post (id, author, time, title, content) 
 			 			   VALUES (NULL, :author, :time, :title, :content)");
 
-	$stmt->bindParam(':author', $author); 
+	$stmt->bindParam(':author', $_REQUEST ['add_author']); 
 	$stmt->bindParam(':time', $time); 
-	$stmt->bindParam(':title', $title); 
-	$stmt->bindParam(':content', $content); 
+	$stmt->bindParam(':title', $_REQUEST['add_title']); 
+	$stmt->bindParam(':content', $_REQUEST['add_content']); 
 	$stmt->execute();
 
 	close_database_connection($pdo);
@@ -67,22 +61,15 @@ function add_post()
 // Редактирование
 function edit_post($id)
 {
-	// ---------------- требудет доработки ----------------
-	$author = $_REQUEST ['add_author'];
-	$time = $_REQUEST['add_time'];
-	$title = $_REQUEST['add_title'];
-	$content = $_REQUEST['add_content'];
-	// ---------------- требудет доработки ----------------
-
 	$pdo = open_database_connection();
 
 	$stmt = $pdo->prepare("UPDATE post SET author = :author, time = :time, title = :title, content = :content WHERE id=:id");
 
 	$stmt->bindParam(':id', $id); 
-	$stmt->bindParam(':author', $author); 
-	$stmt->bindParam(':time', $time); 
-	$stmt->bindParam(':title', $title); 
-	$stmt->bindParam(':content', $content); 
+	$stmt->bindParam(':author', $_REQUEST ['add_author']); 
+	$stmt->bindParam(':time', $_REQUEST['add_time']); 
+	$stmt->bindParam(':title', $_REQUEST['add_title']); 
+	$stmt->bindParam(':content', $_REQUEST['add_content']); 
 	$stmt->execute();
 
 	close_database_connection($pdo);
