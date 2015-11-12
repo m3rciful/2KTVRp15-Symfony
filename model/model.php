@@ -1,91 +1,105 @@
 <?php
-// Подключение к базе данных
-function open_database_connection () 
+class PostsModel
 {
-	$db = 'sergei_db'; $user ='pupil'; $pass = '123';
-	$opt = array(
-	    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-	    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
-	$pdo = new PDO('mysql:host=localhost;dbname='.$db, $user, $pass, $opt);
-	return $pdo;
-}
-function close_database_connection($pdo)
-{
-	$pdo = null;
-}
-// Загрузка постов
-function get_all_posts() 
-{
-	$pdo = open_database_connection();
-	$stmt = $pdo->query('SELECT * FROM post');
-	$posts = array();
-	while ($row = $stmt->fetch())
-	{
-	    $posts[] = $row;
+	private $dbh;
+	private $host = 'localhost';
+	private $db = 'sergei_db';
+	private $user = 'pupil';
+	private $pass = '123';
+	private $charset = 'UTF8';
+
+	// Подключение к базе данных
+	function PostsModel()
+	{	
+		$dsn = "mysql:host=$this->host;dbname=$this->db;charset=$this->charset";
+		$opt = array(
+		 	PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+		    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
+		try 
+		{
+			$this->dbh = new PDO($dsn, $this->user, $this->pass, $opt);
+		} 
+		catch (Exception $e) 
+		{
+			echo 'Error! ' +$e;
+		}
+		
 	}
-	close_database_connection($pdo);
-	return $posts;
-}
-// Просмотр поста
-function get_post($id) 
-{
-	$pdo = open_database_connection();
-	$stmt = $pdo->prepare('SELECT * FROM post WHERE id=?');
-	$stmt->bindParam(1, $id); 
-	$stmt->execute();
-	$post = $stmt->fetch();
-	close_database_connection($pdo);
-	return $post;
-}
-// Добавление поста
-function add_post()
-{
-	// ---------------- требудет доработки ----------------
-	$time = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $_REQUEST['add_time'])));
-	//$content = random_lipsum(1, 'paras', 0);
-	// ---------------- требудет доработки ----------------
+	// Загрузка постов
+	public function get_all_posts()
+	{
+		$sql = 'SELECT id, title FROM post';
+		$stmt = $this->dbh->query($sql);
 
-	$pdo = open_database_connection();
+		$posts = array();
+		while ($row =$stmt-> fetch())
+		{
+			$posts[]=$row;
+		}
+		return $posts;
+	}
+	// Просмотр постов
+	public function get_post($id)
+	{
+		$sql = 'SELECT id, title, content, author, time FROM post WHERE id=?';
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->execute([$id]);;
+		$post = $stmt->fetch();
+		return $post;
+	}
+	// Добавить запись в таблицу 'post'
+	public function add_post()
+	{
+		$test = $_REQUEST ['add_author'];
+		echo 'test';
+		/*
+		if(empty($_REQUEST['add_author']) 
+			AND empty($_REQUEST['add_title']) 
+				AND empty($_REQUEST['add_content']))
+			{
+				echo "Пропущена запись!";
+				return false;
+			}
 
-	$stmt = $pdo->prepare("INSERT INTO post (id, author, time, title, content) 
-			 			   VALUES (NULL, :author, :time, :title, :content)");
+		$add_author = $_REQUEST['add_author'];
+		$add_time = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $_REQUEST['add_time'])));
+		$add_title = $_REQUEST['add_title'];
+		$add_content = $_REQUEST['add_content'];
 
-	$stmt->bindParam(':author', $_REQUEST ['add_author']); 
-	$stmt->bindParam(':time', $time); 
-	$stmt->bindParam(':title', $_REQUEST['add_title']); 
-	$stmt->bindParam(':content', $_REQUEST['add_content']); 
-	$stmt->execute();
+		$sql='INSERT INTO post (author, time, title, content) VALUES (?, ?, ?, ?)';
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->execute(array($add_author, $add_time, $add_title, $add_content));
+		return true;
+		*/
+	}
+	// Добавить изменения в таблицу 'post'
+	public function update()
+	{
+		if(empty($_REQUEST['add_author']) 
+			AND empty($_REQUEST['add_title']) 
+				AND empty($_REQUEST['add_content']))
+				{
+					echo "Пропущена запись!";
+					return false;
+				}
 
-	close_database_connection($pdo);
-}
-// Редактирование
-function edit_post($id)
-{
-	$pdo = open_database_connection();
+		$id= $_REQUEST['id'];
+		$add_autor = $_REQUEST['add_author'];
+		$add_date = date("Y-m-d H:i:s");
+		$add_title = $_REQUEST['add_title'];
+		$add_content = $_REQUEST['add_content'];
 
-	$stmt = $pdo->prepare("UPDATE post SET author = :author, time = :time, title = :title, content = :content WHERE id=:id");
-
-	$stmt->bindParam(':id', $id); 
-	$stmt->bindParam(':author', $_REQUEST ['add_author']); 
-	$stmt->bindParam(':time', $_REQUEST['add_time']); 
-	$stmt->bindParam(':title', $_REQUEST['add_title']); 
-	$stmt->bindParam(':content', $_REQUEST['add_content']); 
-	$stmt->execute();
-
-	close_database_connection($pdo);
-}
-// Удаление
-function remove_post($id) 
-{
-	$pdo = open_database_connection();
-	$stmt = $pdo->prepare('DELETE FROM post WHERE id=?');  
-	$stmt->bindParam(1, $id); 
-	$stmt->execute();
-	close_database_connection($pdo);
-}
-// Random Text from Lorem Ipsum
-function random_lipsum($amount, $what, $start)
-{
-    return simplexml_load_file("http://www.lipsum.com/feed/xml?amount=$amount&what=$what&start=$start")->lipsum;
+		$sql="UPDATE post SET time=?, autor=?, title=?,`ontent=? WHERE id=?";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->execute(array($time, $author, $title, $content, $id));
+		return true;
+	}
+	// Удаление записи из таблицы 'post'
+	public function remove($id) 
+	{
+		$sql='DELETE FROM post WHERE id=?';
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->execute([$id]);
+	}
 }
 ?>

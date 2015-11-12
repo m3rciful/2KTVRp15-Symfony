@@ -22,8 +22,7 @@
 	 	<label for="add_content">Текст</label>
 	 	<textarea rows="10" cols="45" name="add_content" class="form-control"></textarea>
 	</div>
-	<button type="submit" id="submit" name="submit" class="btn btn-default"><i class="fa fa-plus"></i>
- Добавить</button> 
+ 	<a class="btn btn-default" href="add" role="button"><i class="fa fa-plus"></i> Добавить</a>
 	<button type="reset" reset="" name="" class="btn btn-default"><i class="fa fa-eraser"></i>
  Очистить</button>
 </form>

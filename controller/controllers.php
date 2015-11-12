@@ -15,29 +15,38 @@ function render_template($path, array $args)
 // ЗАГРУЗКА
 function list_action()
 {
-	$posts = get_all_posts();
+	$postsModel = new PostsModel();
+	$posts = $postsModel ->get_all_posts();
 	$html = render_template('view/templates/list.php', array('posts' => $posts));
-	return new Response($html);
-}
-// ДОБАВЛЕНИЕ
-function admin_action()
-{
-	if (isset($_POST['submit']) && !empty($_POST['add_title']))
-	{
-    	add_post();
-    	header('Location: ./');
-		exit;
-	}
-
-	$html = render_template('view/templates/admin.php', array());
 	return new Response($html);
 }
 // ПРОСМОТР
 function show_action($id)
 {
-	$post = get_post($id);
-	$html = render_template('view/templates/show.php', array('post' => $post));
+	$postsModel = new PostsModel();
+	$posts = $postsModel ->get_post($id);
+	$html = render_template('view/templates/show.php', array('post' => $posts));
 	return new Response($html);
+}
+// Добавление записи
+function add_action()
+{
+	$PostsModel = new PostsModel();
+	$PostsModel->add_post();
+	$posts = $PostsModel->get_all_posts();
+	$html = render_template('view/templates/admin.php', array());
+	return new Response($html);
+}
+// Страница админа
+function admin_action()
+{
+	$PostsModel = new PostsModel();
+	$posts = $PostsModel->get_all_posts();
+	$html = render_template('view/templates/admin.php', array());
+	return new Response($html);
+
+    	//header('Location: ./');
+		//exit;
 }
 // РЕДАКТИРОВАНИЕ
 function edit_action($id)

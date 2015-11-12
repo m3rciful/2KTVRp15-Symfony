@@ -6,9 +6,13 @@ use Symfony\Component\HttpFoundation\Response;
 $request = Request::createFromGlobals();
 $uri = $request->getPathInfo();
 
-if ($uri == '/') 
+if ($uri == '/')
 {
 	$response = list_action();
+}
+elseif ($uri == '/add')
+{
+	$response = add_action();
 }
 elseif ($uri == '/admin') // Админ
 {
