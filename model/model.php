@@ -50,17 +50,13 @@ class PostsModel
 	// Добавить запись в таблицу 'post'
 	public function add_post()
 	{
-		$test = $_REQUEST ['add_author'];
-		echo 'test';
-		/*
 		if(empty($_REQUEST['add_author']) 
-			AND empty($_REQUEST['add_title']) 
-				AND empty($_REQUEST['add_content']))
+			OR empty($_REQUEST['add_title']) 
+				OR empty($_REQUEST['add_content']))
 			{
-				echo "Пропущена запись!";
+				echo 'Пропущена запись!';
 				return false;
 			}
-
 		$add_author = $_REQUEST['add_author'];
 		$add_time = date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $_REQUEST['add_time'])));
 		$add_title = $_REQUEST['add_title'];
@@ -70,10 +66,9 @@ class PostsModel
 		$stmt = $this->dbh->prepare($sql);
 		$stmt->execute(array($add_author, $add_time, $add_title, $add_content));
 		return true;
-		*/
 	}
 	// Добавить изменения в таблицу 'post'
-	public function update()
+	public function update_post()
 	{
 		if(empty($_REQUEST['add_author']) 
 			AND empty($_REQUEST['add_title']) 
@@ -95,7 +90,7 @@ class PostsModel
 		return true;
 	}
 	// Удаление записи из таблицы 'post'
-	public function remove($id) 
+	public function remove_post($id) 
 	{
 		$sql='DELETE FROM post WHERE id=?';
 		$stmt = $this->dbh->prepare($sql);

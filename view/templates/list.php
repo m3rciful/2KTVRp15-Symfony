@@ -13,7 +13,7 @@
 	<?php endforeach ?>
 	</ul>
 <hr>
-<a class="btn btn-default" href="admin" role="button"><i class="fa fa-plus"></i> Добавить пост</a> <a class="btn btn-default" href="about" role="button"><i class="fa fa-meh-o"></i> Обо мне</a>
+<a class="btn btn-default" href="add" role="button"><i class="fa fa-plus"></i> Добавить пост</a> <a class="btn btn-default" href="about" role="button"><i class="fa fa-meh-o"></i> Обо мне</a>
 
 <?php $content = ob_get_clean(); ?>
 

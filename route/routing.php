@@ -14,21 +14,17 @@ elseif ($uri == '/add')
 {
 	$response = add_action();
 }
-elseif ($uri == '/admin') // Админ
-{
-	$response = admin_action();
-}
-elseif ($uri == '/show') // Просмотр
+elseif ($uri == '/show' AND $request->query->has('id')) // Просмотр
 {
 	$response = show_action($request->query->get('id'));
 }
-elseif ($uri == '/remove') // Удаление
+elseif ($uri == '/remove' AND $request->query->has('id')) // Удаление
 {
 	$response = remove_action($request->query->get('id'));
 }
-elseif ($uri == '/edit') // Редактирование
+elseif ($uri == 'update' AND $request->query->has('id')) // Редактирование
 {
-	$response = edit_action($request->query->get('id'));
+	$response = update_action($request->query->get('id'));
 }
 // ---------------------------------
 //	ДОПОЛНИТЕЛЬНЫЕ СТРАНИЦЫ
