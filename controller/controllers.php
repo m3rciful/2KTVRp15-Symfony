@@ -83,6 +83,11 @@ function about_action()
 	$html = render_template('view/templates/about.php', array());
 	return new Response($html);
 }
+function mod_action()
+{
+	$html = render_template('view/templates/mod_rewrite.php', array());
+	return new Response($html);
+}
 function error_404()
 {
 	$html = render_template('view/templates/error_404.php', array());

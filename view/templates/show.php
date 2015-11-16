@@ -4,6 +4,7 @@
 
 <h2><a href="./" class="fa fa-chevron-left"></a> Пост #<?php echo $post['id'];?></h2>
 <hr>
+
 <table class='table-condensed'>
 	<tr>
 		<td><b>Автор:</b></td>
@@ -28,6 +29,7 @@
 		</td>
 		</tr>
 </table>
+
 <!--
 <form class="col-sm-4">
 

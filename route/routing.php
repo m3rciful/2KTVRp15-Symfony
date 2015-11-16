@@ -33,6 +33,10 @@ elseif ($uri == '/about')
 {
 	$response = about_action();
 }
+elseif ($uri == '/mod') // mod_rewrite test
+{
+	$response = mod_action();
+}
 else
 {
 	$response = error_404();
