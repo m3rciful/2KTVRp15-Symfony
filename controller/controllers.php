@@ -28,15 +28,21 @@ function show_action($id)
 	$html = render_template('view/templates/show.php', array('post' => $posts));
 	return new Response($html);
 }
-// Добавление записи
+// ДОБАВЛЕНИЕ
 function add_action()
 {
-	if (isset($_REQUEST['add']))
+	if (isset($_POST['add']))
 	{
 		$model = new PostsModel();
-		$model->add_post();
-		//header('Location: ./');
-		//exit;
+		$post = $model->add_post();
+
+		if ($post)
+		{
+			header('Location: ./');
+			exit;
+		}
+		else
+			echo '<p class="bg-danger">Пропущена запись!</p>';
 	}
 	
 	$html = render_template('view/templates/admin.php', array());
@@ -44,14 +50,23 @@ function add_action()
 }
 function update_action($id)
 {
-	if (isset($_POST['edit_post']))
+	$model = new PostsModel();
+
+	if (isset($_POST['send']))
 	{
-    	update_post($id);
-    	header("location: show?id=".$id);
-    	exit;
+		$post = $model->update_post($id);
+
+		if ($post)
+		{
+			header("location: show?id=".$id);
+    		exit;
+		}
+		else
+			echo '<p class="bg-danger">Одно из полей было пустым!</p>';
 	}
-	$post = get_post($id);
-	$html = render_template('view/templates/update.php', array('post' => $post));
+
+	$posts = $model->get_post($id);
+	$html = render_template('view/templates/update.php', array('post' => $posts));
 	return new Response($html);
 }
 // УДАЛЕНИЕ

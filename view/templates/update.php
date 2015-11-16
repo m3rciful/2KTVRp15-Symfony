@@ -28,7 +28,7 @@
 		<tr>
 			<td></td>
 			<td>
-				<button type="submit" name="edit_post" class="btn btn-default"><i class="fa fa-floppy-o"></i> Сохранить</button>
+				<button type="submit" name="send" class="btn btn-default"><i class="fa fa-floppy-o"></i> Сохранить</button>
 			</td>
 		</tr>
 	</table>

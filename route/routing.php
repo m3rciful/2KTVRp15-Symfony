@@ -22,7 +22,7 @@ elseif ($uri == '/remove' AND $request->query->has('id')) // Удаление
 {
 	$response = remove_action($request->query->get('id'));
 }
-elseif ($uri == 'update' AND $request->query->has('id')) // Редактирование
+elseif ($uri == '/update' AND $request->query->has('id')) // Редактирование
 {
 	$response = update_action($request->query->get('id'));
 }
