@@ -26,6 +26,18 @@ elseif ($uri == '/update' AND $request->query->has('id')) // Редактиро�
 {
 	$response = update_action($request->query->get('id'));
 }
+elseif ($uri == '/users') // пользователи
+{
+	$response = user_action();
+}
+elseif ($uri == '/add_user') // новый пользователь
+{
+	$response = add_user_action();
+}
+elseif ($uri == '/user' AND $request->query->has('id')) // редактирование
+{
+	$response = edit_user_action($request->query->get('id'));
+}
 // ---------------------------------
 //	ДОПОЛНИТЕЛЬНЫЕ СТРАНИЦЫ
 // ---------------------------------
