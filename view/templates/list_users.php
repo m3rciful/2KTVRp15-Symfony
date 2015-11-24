@@ -20,7 +20,7 @@
 			<td><?php echo $user['lastname']; ?></td>
 			<td><?php echo $user['firstname']; ?></td>
 			<td><?php echo $user['email']; ?></td>
-			<td class="text-right"><a class="btn btn-default btn-xs" href="user?id=<?php echo $user['uid'];?>" role="button"><i class="fa fa-pencil "></i></a></td>
+			<td class="text-right"><a class="btn btn-default btn-sm" href="user?id=<?php echo $user['uid'];?>" role="button"><i class="fa fa-pencil "></i></a></td>
 		</tr>
 		<?php endforeach ?>
 	</table>
